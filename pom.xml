@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.joey</groupId>
 	<artifactId>Books-API</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>Books-API</name>
 	<description>API RestFull for Books</description>
 	<properties>

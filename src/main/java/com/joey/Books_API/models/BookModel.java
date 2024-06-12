@@ -34,7 +34,7 @@ public class BookModel implements Serializable {
 
     @ManyToMany
     @JoinTable(
-            name = "tb_book_author",
+            name = "book_author_tb",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )

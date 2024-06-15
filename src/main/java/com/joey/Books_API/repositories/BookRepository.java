@@ -6,12 +6,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Repository
 public interface BookRepository extends JpaRepository<BookModel, UUID> {
-
-    @Query("SELECT * FROM author_tb a WHERE a.name = :name")
+    @Query("SELECT b FROM book_tb b WHERE b.name = :name")
     Optional<BookModel> findByName (@Param("name") String name);
+
+    @Query("SELECT b FROM book_tb b JOIN b.author_tb a WHERE a.name = :authorName")
+    Set<BookModel> findBooksByAuthorName(@Param("authorName") String authorName);
+
+//    @Query("SELECT b FROM book_tb b JOIN b.publisher_tb p WHERE p.name = :publisherName")
+//    Set<BookModel> findBooksByPublisherName(@Param("publisherName") String publisherName);
 }

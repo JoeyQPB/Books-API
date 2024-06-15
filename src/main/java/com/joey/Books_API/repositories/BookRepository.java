@@ -16,9 +16,9 @@ public interface BookRepository extends JpaRepository<BookModel, UUID> {
     @Query("SELECT b FROM book_tb b WHERE b.name = :name")
     Optional<BookModel> findByName (@Param("name") String name);
 
-    @Query("SELECT b FROM book_tb b JOIN b.author_tb a WHERE a.name = :authorName")
-    Set<BookModel> findBooksByAuthorName(@Param("authorName") String authorName);
+    @Query("SELECT b FROM book_tb b JOIN b.authors a WHERE a.name = :authorName")
+    List<BookModel> findBooksByAuthorName(@Param("authorName") String authorName);
 
-//    @Query("SELECT b FROM book_tb b JOIN b.publisher_tb p WHERE p.name = :publisherName")
+//    @Query("SELECT b FROM book_tb b JOIN b.publisher p WHERE p.name = :publisherName")
 //    Set<BookModel> findBooksByPublisherName(@Param("publisherName") String publisherName);
 }

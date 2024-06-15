@@ -121,7 +121,7 @@ public class BookService {
         this.authorRepository.findByName(authorName)
                 .orElseThrow(() -> new ItemNotFoundException("Author not found! - " + authorName));
 
-        Set<BookModel> books = this.bookRepository.findBooksByAuthorName(authorName);
+        Set<BookModel> books = new HashSet<>(this.bookRepository.findBooksByAuthorName(authorName));
 
         return new ServiceResponse<>(HttpStatus.OK, books);
     }

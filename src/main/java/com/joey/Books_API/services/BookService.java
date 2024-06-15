@@ -16,6 +16,9 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -85,6 +88,17 @@ public class BookService {
         List<BookModel> books = this.bookRepository.findAll();
         LOGGER.info("Finding all books!");
         return new ServiceResponse<>(HttpStatus.OK, books);
+    }
+
+    public ServiceResponse<Page<BookModel>> getAllPage (int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return new ServiceResponse<>(HttpStatus.OK, this.bookRepository.findAll(pageRequest));
+    }
+
+    public ServiceResponse<Page<BookModel>> getAllPageSortedByName (int page, int size) {
+        Sort sort = Sort.by("name").ascending();
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        return new ServiceResponse<>(HttpStatus.OK, this.bookRepository.findAll(pageRequest));
     }
 
     public ServiceResponse<BookModel> getByName (String title) {

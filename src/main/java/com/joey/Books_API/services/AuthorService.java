@@ -67,7 +67,7 @@ public class AuthorService {
     }
 
     @Transactional
-    public ServiceResponse<AuthorModel> updateAuthor(UUID id, AuthorDto authorDto) {
+    public ServiceResponse<AuthorModel> update (UUID id, AuthorDto authorDto) {
         AuthorModel authorUpdated =  this.authorRepository.findById(id)
                 .map(author -> {
                     author.setName(authorDto.name());

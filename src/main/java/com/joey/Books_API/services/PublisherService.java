@@ -56,7 +56,7 @@ public class PublisherService {
     }
 
     @Transactional
-    public ServiceResponse<PublisherModel> updated (UUID id, PublisherDto publisherDto) {
+    public ServiceResponse<PublisherModel> update (UUID id, PublisherDto publisherDto) {
         PublisherModel publisherUpdated = this.publisherRepository.findById(id)
                 .map(publisher -> {
                     publisher.setName(publisherDto.name());

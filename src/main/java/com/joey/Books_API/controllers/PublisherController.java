@@ -44,7 +44,7 @@ public class PublisherController {
 
     @PutMapping("/{id}")
     public ResponseEntity<PublisherModel> update (@RequestBody @Valid PublisherDto data,
-                                             @PathVariable @Valid UUID id) {
+                                                  @PathVariable @Valid UUID id) {
         ServiceResponse<PublisherModel> serviceResponse = this.publisherService.update(id, data);
         return ResponseEntity.status(serviceResponse.httpStatus()).body(serviceResponse.body());
     }

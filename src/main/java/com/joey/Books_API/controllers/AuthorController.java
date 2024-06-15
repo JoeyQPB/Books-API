@@ -51,7 +51,7 @@ public class AuthorController {
 
     @PutMapping("/{authorId}/{bookId}")
     public ResponseEntity<AuthorModel> addBookToAuthor (@PathVariable @Valid UUID authorId,
-                                               @PathVariable @Valid UUID bookId) {
+                                                        @PathVariable @Valid UUID bookId) {
         ServiceResponse<AuthorModel> serviceResponse = this.authorService.addBookToAuthor(authorId, bookId);
         return ResponseEntity.status(serviceResponse.httpStatus()).body(serviceResponse.body());
     }

@@ -11,6 +11,9 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +37,7 @@ public class AuthorService {
     }
 
     @Transactional
+    @CachePut(value = "authors", key = "#author.id")
     public ServiceResponse<AuthorModel> save (AuthorDto authorDto) {
         AuthorModel author = new AuthorModel();
         author.setName(authorDto.name());
@@ -44,6 +48,7 @@ public class AuthorService {
         return new ServiceResponse<>(HttpStatus.CREATED, authorCreated);
     }
 
+    @Cacheable(value = "authors", key = "#id")
     public ServiceResponse<AuthorModel> getById (UUID id) {
         AuthorModel author = this.authorRepository.findById(id)
                 .orElseThrow(() -> new ItemNotFoundException("Author not found for id: " + id));
@@ -52,6 +57,7 @@ public class AuthorService {
         return new ServiceResponse<>(HttpStatus.OK, author);
     }
 
+    @Cacheable(value = "authors", key = "#id")
     public ServiceResponse<AuthorModel> getByName (String name) {
         AuthorModel author = this.authorRepository.findByName(name)
                 .orElseThrow(() -> new ItemNotFoundException("Author not found for name: " + name));
@@ -60,6 +66,7 @@ public class AuthorService {
         return new ServiceResponse<>(HttpStatus.OK, author);
     }
 
+    @Cacheable(value = "authors")
     public ServiceResponse<Iterable<AuthorModel>> getAllAuthors () {
         Iterable<AuthorModel> authors = this.authorRepository.findAll();
         LOGGER.info("Found all Authors");
@@ -67,6 +74,7 @@ public class AuthorService {
     }
 
     @Transactional
+    @CachePut(value = "authors", key = "#author.id")
     public ServiceResponse<AuthorModel> update (UUID id, AuthorDto authorDto) {
         AuthorModel authorUpdated =  this.authorRepository.findById(id)
                 .map(author -> {
@@ -102,6 +110,7 @@ public class AuthorService {
     }
 
     @Transactional
+    @CacheEvict(value = "authors", key = "#id")
     public ServiceResponse<Boolean> delete (UUID id) {
         AuthorModel author = this.getById(id).body();
         this.authorRepository.delete(author);

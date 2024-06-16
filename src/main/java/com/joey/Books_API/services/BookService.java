@@ -16,6 +16,9 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -46,6 +49,7 @@ public class BookService {
     }
 
     @Transactional
+    @CachePut(value = "books", key = "#books.id")
     public ServiceResponse<BookModel> save (BookModelDto bookModelDto) {
         BookModel book = new BookModel();
         book.setName(bookModelDto.title());
@@ -84,6 +88,7 @@ public class BookService {
         return new ServiceResponse<>(HttpStatus.CREATED, bookCreated);
     }
 
+    @Cacheable(value = "books")
     public ServiceResponse<Iterable<BookModel>> getAllBooks() {
         List<BookModel> books = this.bookRepository.findAll();
         LOGGER.info("Finding all books!");
@@ -101,6 +106,7 @@ public class BookService {
         return new ServiceResponse<>(HttpStatus.OK, this.bookRepository.findAll(pageRequest));
     }
 
+    @Cacheable(value = "books", key = "#id")
     public ServiceResponse<BookModel> getByName (String title) {
         BookModel book = this.bookRepository.findByName(title)
                         .orElseThrow(() -> new ItemNotFoundException("Book not found!"));
@@ -109,6 +115,7 @@ public class BookService {
         return new ServiceResponse<>(HttpStatus.OK, book);
     }
 
+    @Cacheable(value = "books", key = "#id")
     public ServiceResponse<BookModel> getById (UUID id) {
         BookModel book = this.bookRepository.findById(id)
                         .orElseThrow(() -> new ItemNotFoundException("Book not found!"));
@@ -117,7 +124,7 @@ public class BookService {
         return new ServiceResponse<>(HttpStatus.OK, book);
     }
 
-    public ServiceResponse<Set<BookModel>> getBooksByAuthorName(String authorName) {
+    public ServiceResponse<Set<BookModel>> getBooksByAuthorName (String authorName) {
         this.authorRepository.findByName(authorName)
                 .orElseThrow(() -> new ItemNotFoundException("Author not found! - " + authorName));
 
@@ -126,7 +133,7 @@ public class BookService {
         return new ServiceResponse<>(HttpStatus.OK, books);
     }
 
-    public ServiceResponse<Set<BookModel>> getBooksByPublisher(String publisherName) {
+    public ServiceResponse<Set<BookModel>> getBooksByPublisher (String publisherName) {
         PublisherModel publisher = this.publisherRepository.findByName(publisherName)
                 .orElseThrow(() -> new ItemNotFoundException("Publisher not found! - " + publisherName));
 
@@ -134,6 +141,7 @@ public class BookService {
     }
 
     @Transactional
+    @CachePut(value = "books", key = "#books.id")
     public ServiceResponse<BookModel> update (UUID id, BookModelUpdateDto dto) {
         BookModel book = this.getById(id).body();
 
@@ -167,6 +175,7 @@ public class BookService {
     }
 
     @Transactional
+    @CacheEvict(value = "publishers", key = "#id")
     public ServiceResponse<Boolean> delete (UUID id) {
         BookModel book = this.getById(id).body();
         this.bookRepository.delete(book);

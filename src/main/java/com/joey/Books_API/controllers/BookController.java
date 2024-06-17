@@ -65,7 +65,7 @@ public class BookController {
         return ResponseEntity.status(serviceResponse.httpStatus()).body(serviceResponse.body());
     }
 
-    @GetMapping("/q_publisher={author}")
+    @GetMapping("/q_publisher={publisher}")
     public ResponseEntity<Set<BookModel>> getByPublisher (@PathVariable @Valid String publisher) {
         ServiceResponse<Set<BookModel>> serviceResponse = this.bookService.getBooksByPublisher(publisher);
         return ResponseEntity.status(serviceResponse.httpStatus()).body(serviceResponse.body());

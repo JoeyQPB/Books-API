@@ -12,7 +12,6 @@ import java.time.Instant;
 @Component
 @EnableScheduling
 public class CacheEvictScheduler {
-
     private final Logger LOGGER = LoggerFactory.getLogger(CacheEvictScheduler.class);
 
     @CacheEvict(value = "books", allEntries = true)

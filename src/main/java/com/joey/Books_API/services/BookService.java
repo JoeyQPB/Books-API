@@ -175,7 +175,7 @@ public class BookService {
     }
 
     @Transactional
-    @CacheEvict(value = "publishers", key = "#id")
+    @CacheEvict(value = "books", key = "#id")
     public ServiceResponse<Boolean> delete (UUID id) {
         BookModel book = this.getById(id).body();
         this.bookRepository.delete(book);

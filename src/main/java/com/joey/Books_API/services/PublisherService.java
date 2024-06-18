@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,10 @@ public class PublisherService {
     private PublisherRepository publisherRepository;
 
     @Transactional
-    @CachePut(value = "publishers", key = "#publishers.id")
+    @Caching(
+            put = { @CachePut(value = "publishers", key = "#result.body().id") },
+            evict = { @CacheEvict(value = "publishers", key = "'allPublishers'") }
+    )
     public ServiceResponse<PublisherModel> save (PublisherDto publisherDto) {
         PublisherModel publisher = new PublisherModel();
         publisher.setName(publisherDto.name());
@@ -45,7 +49,9 @@ public class PublisherService {
         return new ServiceResponse<>(HttpStatus.OK, publisher);
     }
 
-    @Cacheable(value = "publishers", key = "#id")
+    @Caching(
+            put = { @CachePut(value = "publishers", key = "#result.body().id") }
+    )
     public ServiceResponse<PublisherModel> getByName (String name) {
         PublisherModel publisher = this.publisherRepository.findByName(name)
                 .orElseThrow(() -> new ItemNotFoundException("Publisher not found for name: " + name));
@@ -54,7 +60,7 @@ public class PublisherService {
         return new ServiceResponse<>(HttpStatus.OK, publisher);
     }
 
-    @Cacheable(value = "publishers")
+    @Cacheable(value = "publishers", key = "'allPublishers'")
     public ServiceResponse<Iterable<PublisherModel>> getAllPublishers () {
         Iterable<PublisherModel> publisher = this.publisherRepository.findAll();
 
@@ -63,7 +69,6 @@ public class PublisherService {
     }
 
     @Transactional
-    @CachePut(value = "publishers", key = "#publisher.id")
     public ServiceResponse<PublisherModel> update (UUID id, PublisherDto publisherDto) {
         PublisherModel publisherUpdated = this.publisherRepository.findById(id)
                 .map(publisher -> {
@@ -77,7 +82,12 @@ public class PublisherService {
     }
 
     @Transactional
-    @CacheEvict(value = "publishers", key = "#id")
+    @Caching(
+            evict = {
+                    @CacheEvict(value = "publishers", key = "#id"),
+                    @CacheEvict(value = "publishers", key = "'allPublishers'")
+            }
+    )
     public ServiceResponse<Boolean> delete (UUID id) {
         PublisherModel publisher = this.getById(id).body();
         this.publisherRepository.delete(publisher);

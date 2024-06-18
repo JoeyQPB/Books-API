@@ -14,11 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -37,16 +36,20 @@ public class AuthorService {
     }
 
     @Transactional
+    @Caching(
+            put = { @CachePut(value = "authors", key = "#result.body().id") },
+            evict = { @CacheEvict(value = "authors", key = "'allAuthors'") }
+    )
     public ServiceResponse<AuthorModel> save (AuthorDto authorDto) {
         AuthorModel author = new AuthorModel();
         author.setName(authorDto.name());
 
         AuthorModel authorCreated = this.authorRepository.save(author);
         LOGGER.info("Author Created: {}", authorCreated);
-
         return new ServiceResponse<>(HttpStatus.CREATED, authorCreated);
     }
 
+    @Cacheable(value = "authors", key = "#id")
     public ServiceResponse<AuthorModel> getById (UUID id) {
         AuthorModel author = this.authorRepository.findById(id)
                 .orElseThrow(() -> new ItemNotFoundException("Author not found for id: " + id));
@@ -55,6 +58,9 @@ public class AuthorService {
         return new ServiceResponse<>(HttpStatus.OK, author);
     }
 
+    @Caching(
+            put = { @CachePut(value = "authors", key = "#result.body().id") }
+    )
     public ServiceResponse<AuthorModel> getByName (String name) {
         AuthorModel author = this.authorRepository.findByName(name)
                 .orElseThrow(() -> new ItemNotFoundException("Author not found for name: " + name));
@@ -63,7 +69,7 @@ public class AuthorService {
         return new ServiceResponse<>(HttpStatus.OK, author);
     }
 
-    @Cacheable(value = "authors")
+    @Cacheable(value = "authors", key = "'allAuthors'")
     public ServiceResponse<Iterable<AuthorModel>> getAllAuthors () {
         Iterable<AuthorModel> authors = this.authorRepository.findAll();
         LOGGER.info("Found all Authors");
@@ -84,6 +90,9 @@ public class AuthorService {
     }
 
     @Transactional
+    @Caching(
+            put = { @CachePut(value = "authors", key = "#authorId") }
+    )
     public ServiceResponse<AuthorModel> addBookToAuthor (UUID authorId, UUID bookId) {
         AuthorModel author =  this.authorRepository.findById(authorId)
                 .orElseThrow(() -> new ItemNotFoundException("Author not found for: " + authorId));
@@ -106,7 +115,12 @@ public class AuthorService {
     }
 
     @Transactional
-    @CacheEvict(value = "authors", key = "#id")
+    @Caching(
+            evict = {
+                    @CacheEvict(value = "authors", key = "#id"),
+                    @CacheEvict(value = "authors", key = "'allAuthors'")
+            }
+    )
     public ServiceResponse<Boolean> delete (UUID id) {
         AuthorModel author = this.getById(id).body();
         this.authorRepository.delete(author);

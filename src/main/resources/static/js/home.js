@@ -1,9 +1,9 @@
     function displayResult(title, result) {
         document.getElementById('resultTitle').innerText = title;
-        document.getElementById('resultBody').innerText = JSON.stringify(result, null, 2);
+        document.getElementById('resultBody').textContent = JSON.stringify(result, null, 2);
     }
 
-    const apiUrl = "localhost:8080";
+    const apiUrl = "http://localhost:8080";
     const bookUrl = apiUrl+"/api/book";
     const authorUrl = apiUrl+"/api/author";
     const publisherUrl = apiUrl+"/api/publisher";
@@ -12,9 +12,9 @@
 
     const createBook = async () => {
         const book = {
-            title: document.getElementById('bookTitle').value.trim(),
-            publisherName: document.getElementById('publisherName').value.trim(),
-            authorNames: document.getElementById('authorNames').value.split(',').map(el => el.trim()),
+            title: document.getElementById('bookTitle').value.toLowerCase().trim(),
+            publisherName: document.getElementById('publisherName').value.toLowerCase().trim(),
+            authorNames: document.getElementById('authorNames').value.split(',').map(el => el.toLowerCase().trim()),
             reviewComment: document.getElementById('reviewComment').value
         };
 
@@ -65,7 +65,7 @@
     }
 
     const findAllBooksByAuthorName = async () => {
-        const authorName = document.getElementById('findAllBooksByAuthorNameButton').value.trim();
+        const authorName = document.getElementById('findAllBooksByAuthorNameButton').value.toLowerCase().trim();
 
         try {
             const response = await fetch(bookUrl+"/q_author="+authorName, {
@@ -81,7 +81,7 @@
     }
 
     const findAllBooksByPublisherName = async () => {
-        const publisherName = document.getElementById('findAllBooksByPublisherNameButton').value;
+        const publisherName = document.getElementById('findAllBooksByPublisherNameButton').value.toLowerCase().trim();
 
         try {
             const response = await fetch(bookUrl+"/q_publisher="+publisherName, {
@@ -97,7 +97,7 @@
     }
 
     const findBookByName = async () => {
-        const bookName = document.getElementById('findBookByNameButton').value;
+        const bookName = document.getElementById('findBookByNameButton').value.toLowerCase().trim();
 
         try {
             const response = await fetch(bookUrl+"/q_name="+publisherName, {
@@ -147,7 +147,7 @@
     // AUTHOR
 
     const createAuthor = async () => {
-        const author = { name: document.getElementById('authorName').value };
+        const author = { name: document.getElementById('authorName').value.toLowerCase().trim() };
 
         try {
             const response = await fetch(authorUrl, {
@@ -164,7 +164,6 @@
     }
 
     const findAllAuthors = async () => {
-
         try {
             const response = await fetch(authorUrl, {
                 method: "GET",
@@ -179,7 +178,7 @@
     }
 
     const findAuthorByName = async () => {
-        const name = document.getElementById('findAuthorByNameButton').value;
+        const name = document.getElementById('findAuthorByNameButton').value.toLowerCase().trim();
 
         try {
             const response = await fetch(authorUrl+"/q_name="+name, {
@@ -247,7 +246,7 @@
     // PUBLISHER
 
     const createPublisher = async () => {
-        const publisher = { name: document.getElementById('publisherNameForm').value };
+        const publisher = { name: document.getElementById('publisherNameForm').value.toLowerCase().trim() };
 
         try {
             const response = await fetch(publisherUrl, {
@@ -278,7 +277,7 @@
     }
 
     const findPublisherByName = async () => {
-        const name = document.getElementById('findPublisherByNameButton').value;
+        const name = document.getElementById('findPublisherByNameButton').value.toLowerCase().trim();
 
         try {
             const response = await fetch(publisherUrl+"/q_name="+name, {

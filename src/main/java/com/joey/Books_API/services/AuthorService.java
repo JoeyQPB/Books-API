@@ -37,7 +37,6 @@ public class AuthorService {
     }
 
     @Transactional
-    @CachePut(value = "authors", key = "#author.id")
     public ServiceResponse<AuthorModel> save (AuthorDto authorDto) {
         AuthorModel author = new AuthorModel();
         author.setName(authorDto.name());
@@ -48,7 +47,6 @@ public class AuthorService {
         return new ServiceResponse<>(HttpStatus.CREATED, authorCreated);
     }
 
-    @Cacheable(value = "authors", key = "#id")
     public ServiceResponse<AuthorModel> getById (UUID id) {
         AuthorModel author = this.authorRepository.findById(id)
                 .orElseThrow(() -> new ItemNotFoundException("Author not found for id: " + id));
@@ -57,7 +55,6 @@ public class AuthorService {
         return new ServiceResponse<>(HttpStatus.OK, author);
     }
 
-    @Cacheable(value = "authors", key = "#id")
     public ServiceResponse<AuthorModel> getByName (String name) {
         AuthorModel author = this.authorRepository.findByName(name)
                 .orElseThrow(() -> new ItemNotFoundException("Author not found for name: " + name));
@@ -74,7 +71,6 @@ public class AuthorService {
     }
 
     @Transactional
-    @CachePut(value = "authors", key = "#author.id")
     public ServiceResponse<AuthorModel> update (UUID id, AuthorDto authorDto) {
         AuthorModel authorUpdated =  this.authorRepository.findById(id)
                 .map(author -> {

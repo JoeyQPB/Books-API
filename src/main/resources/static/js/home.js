@@ -323,3 +323,7 @@
             displayResult('Publisher - Delete', { error: error.message });
         }
     }
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }

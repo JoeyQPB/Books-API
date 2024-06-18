@@ -37,32 +37,32 @@
                             <textarea class="form-control" id="reviewComment"></textarea>
                         </div>
                         <div class="form-group">
-                            <button type="button" class="btn btn-primary btn-block mb-2" onclick="createBook()">Create</button>
-                            <button type="button" class="btn btn-secondary btn-block mb-2" onclick="findAllBooks()">Find All</button>
+                            <button type="button" class="btn btn-primary btn-block mb-2" onclick="createBook(); scrollToTop()">Create</button>
+                            <button type="button" class="btn btn-secondary btn-block mb-2" onclick="findAllBooks(); scrollToTop()">Find All</button>
 
                             <label for="findAllBooksPaginationButton">Enter with PAGE and SIZE:</label>
                             <input type="text" id="findAllBooksPaginationButton" class="form-control mb-2" placeholder="PAGE, SIZE (comma separated)">
-                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findAllBooksPagination()">Find Books Pagination</button>
+                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findAllBooksPagination(); scrollToTop()">Find Books Pagination</button>
 
                             <label for="findAllBooksByAuthorNameButton">Enter with Author Name:</label>
                             <input type="text" id="findAllBooksByAuthorNameButton" class="form-control mb-2">
-                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findAllBooksByAuthorName()">Find Books by Author Name</button>
+                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findAllBooksByAuthorName(); scrollToTop()">Find Books by Author Name</button>
 
                             <label for="findAllBooksByPublisherNameButton">Enter with Publisher Name:</label>
                             <input type="text" id="findAllBooksByPublisherNameButton" class="form-control mb-2">
-                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findAllBooksByPublisherName()">Find By Publisher Name</button>
+                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findAllBooksByPublisherName(); scrollToTop()">Find By Publisher Name</button>
 
                             <label for="findBookByNameButton">Enter with Book name:</label>
                             <input type="text" id="findBookByNameButton" class="form-control mb-2">
-                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findBookByName()">Find By Name</button>
+                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findBookByName(); scrollToTop()">Find By Name</button>
 
                             <label for="findBookByIdButton">Enter with Book ID:</label>
                             <input type="text" id="findBookByIdButton" class="form-control mb-2">
-                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findBookById()">Find By ID</button>
+                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findBookById(); scrollToTop()">Find By ID</button>
 
                             <label for="deleteBookId">Enter with Book ID:</label>
                             <input type="text" id="deleteBookId" class="form-control mb-2">
-                            <button type="button" class="btn btn-danger btn-block mb-2" onclick="deleteBook()">Delete</button>
+                            <button type="button" class="btn btn-danger btn-block mb-2" onclick="deleteBook(); scrollToTop()">Delete</button>
                         </div>
                     </form>
                 </div>
@@ -80,24 +80,24 @@
                             <input type="text" class="form-control" id="authorName" required>
                         </div>
                         <div class="form-group">
-                            <button type="button" class="btn btn-primary btn-block mb-2" onclick="createAuthor()">Create</button>
-                            <button type="button" class="btn btn-secondary btn-block mb-2" onclick="findAllAuthors()">Find All</button>
+                            <button type="button" class="btn btn-primary btn-block mb-2" onclick="createAuthor(); scrollToTop()">Create</button>
+                            <button type="button" class="btn btn-secondary btn-block mb-2" onclick="findAllAuthors(); scrollToTop()">Find All</button>
 
                             <label for="findAuthorByNameButton">Enter with Author name:</label>
                             <input type="text" id="findAuthorByNameButton" class="form-control mb-2">
-                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findAuthorByName()">Find By Name</button>
+                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findAuthorByName(); scrollToTop()">Find By Name</button>
 
                             <label for="findAuthorByIdButton">Enter with Author ID:</label>
                             <input type="text" id="findAuthorByIdButton" class="form-control mb-2">
-                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findAuthorById()">Find By ID</button>
+                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findAuthorById(); scrollToTop()">Find By ID</button>
 
                             <label for="addBookToAuthorButton">Enter with Author ID and Book ID:</label>
                             <input type="text" id="addBookToAuthorButton" class="form-control mb-2" placeholder="Author ID, Book ID (comma separated)">
-                            <button type="button" class="btn btn-info btn-block mb-2" onclick="addBookToAuthor()">Add Book To Author</button>
+                            <button type="button" class="btn btn-info btn-block mb-2" onclick="addBookToAuthor(); scrollToTop()">Add Book To Author</button>
 
                             <label for="deleteAuthorId">Enter with Author ID: </label>
                             <input type="text" id="deleteAuthorId" class="form-control mb-2">
-                            <button type="button" class="btn btn-danger btn-block mb-2" onclick="deleteAuthor()">Delete</button>
+                            <button type="button" class="btn btn-danger btn-block mb-2" onclick="deleteAuthor(); scrollToTop()">Delete</button>
                         </div>
                     </form>
                 </div>
@@ -115,20 +115,20 @@
                             <input type="text" class="form-control" id="publisherNameForm" required>
                         </div>
                         <div class="form-group">
-                            <button type="button" class="btn btn-primary btn-block mb-2" onclick="createPublisher()">Create</button>
-                            <button type="button" class="btn btn-secondary btn-block mb-2" onclick="findAllPublishers()">Find All</button>
+                            <button type="button" class="btn btn-primary btn-block mb-2" onclick="createPublisher(); scrollToTop()">Create</button>
+                            <button type="button" class="btn btn-secondary btn-block mb-2" onclick="findAllPublishers(); scrollToTop()">Find All</button>
 
                             <label for="findPublisherByNameButton">Enter with Publisher name:</label>
                             <input type="text" id="findPublisherByNameButton" class="form-control mb-2">
-                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findPublisherByName()">Find By Name</button>
+                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findPublisherByName(); scrollToTop()">Find By Name</button>
 
                             <label for="findPublisherByIdButton">Enter with Publisher ID:</label>
                             <input type="text" id="findPublisherByIdButton" class="form-control mb-2">
-                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findPublisherById()">Find By ID</button>
+                            <button type="button" class="btn btn-info btn-block mb-2" onclick="findPublisherById(); scrollToTop()">Find By ID</button>
 
                             <label for="deletePublisherId">Enter with Publisher ID:</label>
                             <input type="text" id="deletePublisherId" class="form-control mb-2">
-                            <button type="button" class="btn btn-danger btn-block mb-2" onclick="deletePublisher()">Delete</button>
+                            <button type="button" class="btn btn-danger btn-block mb-2" onclick="deletePublisher(); scrollToTop()" href="#resultBody">Delete</button>
                         </div>
                     </form>
                 </div>
@@ -142,14 +142,15 @@
                     Result
                 </div>
                 <div class="card-body">
-            <pre id="resultBody" style="background-color: #909090; padding: 10px; border-radius: 5px; white-space: pre-wrap; font-family: monospace;">
-                <!-- Aqui serão exibidos os resultados das operações -->
-            </pre>
+                    <pre id="resultBody" style="background-color: #909090; padding: 10px; border-radius: 5px; white-space: pre-wrap; font-family: monospace;">
+                        <!-- Results -->
+                    </pre>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="/js/home.js"></script>
+<!--<script src="/js/home.js"></script>-->
+<script src="/static/js/home.js"></script>
 </body>
 </html>

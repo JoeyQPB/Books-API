@@ -24,20 +24,20 @@ jobs:
             run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
 
           - name: Build Docker image
-            run: docker build -t  ${{secrets.DOCKER_USERNAME}}/bookStore-api .
+            run: docker build -t ${{secrets.DOCKER_USERNAME}}/book-store-api .
 
           - name: Push image to docker hub
-            run: docker push ${{secrets.DOCKER_USERNAME}}/bookStore-api
+            run: docker push ${{secrets.DOCKER_USERNAME}}/book-store-api
 
   deploy:
     needs: build
     runs-on: self-hosted
     steps:
       - name: Pull image from docker hub
-        run: docker pull ${{secrets.DOCKER_USERNAME}}/bookStore-api:latest
+        run: docker pull ${{secrets.DOCKER_USERNAME}}/book-store-api:latest
 
       - name: Remove container if exists
-        run: docker rm -f bookStore-api-container
+        run: docker rm -f book-store-api-container
 
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name bookStore-api-container ${{secrets.DOCKER_USERNAME}}/bookStore-api:latest
+        run: docker run -d -p 8080:8080 --name book-store-api-container ${{secrets.DOCKER_USERNAME}}/book-store-api:latest

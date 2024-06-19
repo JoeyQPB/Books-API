@@ -11,10 +11,16 @@
     // BOOK
 
     const createBook = async () => {
+
+    const authors = document.getElementById('authorNames').value;
+    const authorNames = authors.includes(',') ?
+        authors.split(',').map(el => el.toLowerCase().trim()) :
+        [authors.toLowerCase().trim()];
+
         const book = {
             title: document.getElementById('bookTitle').value.toLowerCase().trim(),
             publisherName: document.getElementById('publisherName').value.toLowerCase().trim(),
-            authorNames: document.getElementById('authorNames').value.split(',').map(el => el.toLowerCase().trim()),
+            authorNames,
             reviewComment: document.getElementById('reviewComment').value
         };
 
@@ -24,6 +30,11 @@
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(book)
             });
+
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
 
             const data = await response.json();
             displayResult('Book - Create', data);
@@ -38,6 +49,11 @@
                 method: "GET",
                 headers: { "Content-Type": "application/json" }
             });
+
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
 
             const result = await response.json();
             displayResult('Book - Find All', result);
@@ -57,6 +73,11 @@
                 headers: { "Content-Type": "application/json" }
             });
 
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
+
             const result = await response.json();
             displayResult('Book - Find All Pagination page: ' + page + 'size: ' + size, result);
         } catch (error) {
@@ -72,6 +93,11 @@
                 method: "GET",
                 headers: { "Content-Type": "application/json" }
             });
+
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
 
             const result = await response.json();
             displayResult('Book - Find all by author name: ' + authorName, result);
@@ -89,6 +115,11 @@
                 headers: { "Content-Type": "application/json" }
             });
 
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
+
             const result = await response.json();
             displayResult('Book - Find all by publisher: ' + publisherName, result);
         } catch (error) {
@@ -100,10 +131,15 @@
         const bookName = document.getElementById('findBookByNameButton').value.toLowerCase().trim();
 
         try {
-            const response = await fetch(bookUrl+"/q_name="+publisherName, {
+            const response = await fetch(bookUrl+"/q_name="+bookName, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" }
             });
+
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
 
             const result = await response.json();
             displayResult('Book - Find by Book name: ' + bookName, result);
@@ -121,6 +157,11 @@
                 headers: { "Content-Type": "application/json" }
             });
 
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
+
             const result = await response.json();
             displayResult('Book - Find book by id: ' + id, result);
         } catch (error) {
@@ -136,6 +177,11 @@
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" }
             });
+
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
 
             const result = await response.json();
             displayResult('Book - Delete', { id, status: 'Deleted: ' + result });
@@ -156,6 +202,11 @@
                 body: JSON.stringify(author)
             });
 
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
+
             const data = await response.json();
             displayResult('Author - Create', data);
         } catch (error) {
@@ -169,6 +220,11 @@
                 method: "GET",
                 headers: { "Content-Type": "application/json" }
             });
+
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
 
             const result = await response.json();
             displayResult('Author - Find All', result);
@@ -186,6 +242,11 @@
                 headers: { "Content-Type": "application/json" }
             });
 
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
+
             const result = await response.json();
             displayResult('Author - Find By name: ' + name, result);
         } catch (error) {
@@ -201,6 +262,11 @@
                 method: "GET",
                 headers: { "Content-Type": "application/json" }
             });
+
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
 
             const result = await response.json();
             displayResult('Author - Find By Id: ' + id, result);
@@ -220,6 +286,11 @@
                 headers: { "Content-Type": "application/json" }
             });
 
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
+
             const result = await response.json();
             displayResult('Author updated: ' + idAuthor, result);
         } catch (error) {
@@ -235,6 +306,11 @@
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" }
             });
+
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
 
             const result = await response.json();
             displayResult('Author - Delete', { id, status: 'Deleted: ' + result });
@@ -255,6 +331,11 @@
                 body: JSON.stringify(publisher)
             });
 
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
+
             const data = await response.json();
             displayResult('Publisher - Create', data);
         } catch (error) {
@@ -268,6 +349,11 @@
                 method: "GET",
                 headers: { "Content-Type": "application/json" }
             });
+
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
 
             const result = await response.json();
             displayResult('publisherUrl - Find All', result);
@@ -285,6 +371,11 @@
                 headers: { "Content-Type": "application/json" }
             });
 
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
+
             const result = await response.json();
             displayResult('Publisher - Find By Name: ' + name, result);
         } catch (error) {
@@ -300,6 +391,11 @@
                 method: "GET",
                 headers: { "Content-Type": "application/json" }
             });
+
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
 
             const result = await response.json();
             displayResult('Publisher - Find By ID: ' + id, result);
@@ -317,6 +413,11 @@
                 headers: { "Content-Type": "application/json" }
             });
 
+            if (!response.ok) {
+                let result = await decodeBody(response);
+                throw new Error(`HTTP Status: ${response.status} - ${result}`);
+            }
+
             const result = await response.json();
             displayResult('Publisher - Delete', { id, status: 'Deleted: ' + result });
         } catch (error) {
@@ -326,4 +427,19 @@
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const decodeBody = async (response) => {
+        const reader = response.body.getReader();
+        let result = '';
+        let decoder = new TextDecoder('utf-8');
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            result += decoder.decode(value, { stream: true });
+            }
+
+        result += decoder.decode();
+        return result;
     }

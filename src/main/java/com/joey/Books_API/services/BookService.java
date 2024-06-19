@@ -115,7 +115,7 @@ public class BookService {
     )
     public ServiceResponse<BookModel> getByName (String title) {
         BookModel book = this.bookRepository.findByName(title)
-                        .orElseThrow(() -> new ItemNotFoundException("Book not found!"));
+                        .orElseThrow(() -> new ItemNotFoundException("Book not found for: " + title));
 
         LOGGER.info("Book found: {}", book);
         return new ServiceResponse<>(HttpStatus.OK, book);
@@ -124,7 +124,7 @@ public class BookService {
     @Cacheable(value = "books", key = "#id")
     public ServiceResponse<BookModel> getById (UUID id) {
         BookModel book = this.bookRepository.findById(id)
-                        .orElseThrow(() -> new ItemNotFoundException("Book not found!"));
+                        .orElseThrow(() -> new ItemNotFoundException("Book not found for: " + id));
 
         LOGGER.info("Book found: {}", book);
         return new ServiceResponse<>(HttpStatus.OK, book);

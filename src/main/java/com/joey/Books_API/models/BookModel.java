@@ -60,10 +60,7 @@ public class BookModel implements Serializable {
     public String toString() {
         return "BookModel{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", publisher=" + publisher +
-                ", authors=" + authors +
-                ", review=" + review +
+                ", name='" + name +
                 '}';
     }
 }

@@ -18,27 +18,27 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity<String> exceptionHandler (Exception exception) {
         LOGGER.error("Error: Exception - " + exception.getMessage());
         RestErrorMessage<String> threatResponse = new RestErrorMessage<>(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
-        return ResponseEntity.status(threatResponse.httpStatus()).body("@ControllerAdvice: " + threatResponse.body());
+        return ResponseEntity.status(threatResponse.httpStatus()).body("ControllerAdvice - " + threatResponse.body());
     }
 
     @ExceptionHandler(RuntimeException.class)
     private ResponseEntity<String> runtimeExceptionHandler (RuntimeException exception) {
         LOGGER.error("Error: RuntimeException - " + exception.getMessage());
         RestErrorMessage<String> threatResponse = new RestErrorMessage<>(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
-        return ResponseEntity.status(threatResponse.httpStatus()).body("@ControllerAdvice: " + threatResponse.body());
+        return ResponseEntity.status(threatResponse.httpStatus()).body("ControllerAdvice - " + threatResponse.body());
     }
 
     @ExceptionHandler(NullPointerException.class)
     private ResponseEntity<String> nullPointerExceptionHandler (NullPointerException exception) {
         LOGGER.error("Error: NullPointerException - " + exception.getMessage());
         RestErrorMessage<String> threatResponse = new RestErrorMessage<>(HttpStatus.BAD_REQUEST, exception.getMessage());
-        return ResponseEntity.status(threatResponse.httpStatus()).body("@ControllerAdvice: " + threatResponse.body());
+        return ResponseEntity.status(threatResponse.httpStatus()).body("ControllerAdvice - " + threatResponse.body());
     }
 
     @ExceptionHandler(ItemNotFoundException.class)
     private ResponseEntity<String> itemNotFoundException (ItemNotFoundException exception) {
         LOGGER.error("Error: ItemNotFoundException - " + exception.getMessage());
         RestErrorMessage<String> threatResponse = new RestErrorMessage<>(HttpStatus.BAD_REQUEST, exception.getMessage());
-        return ResponseEntity.status(threatResponse.httpStatus()).body("@ControllerAdvice: " + threatResponse.body());
+        return ResponseEntity.status(threatResponse.httpStatus()).body("ControllerAdvice - " + threatResponse.body());
     }
 }

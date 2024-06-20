@@ -3,7 +3,7 @@
         document.getElementById('resultBody').textContent = JSON.stringify(result, null, 2);
     }
 
-    const apiUrl = "http://localhost:8080";
+    const apiUrl = "http://16.171.10.51:8080";
     const bookUrl = apiUrl+"/api/book";
     const authorUrl = apiUrl+"/api/author";
     const publisherUrl = apiUrl+"/api/publisher";

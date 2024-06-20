@@ -7,8 +7,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
-
 @Component
 @EnableScheduling
 public class CacheEvictScheduler {
@@ -17,18 +15,30 @@ public class CacheEvictScheduler {
     @CacheEvict(value = "books", allEntries = true)
     @Scheduled(cron = "0 0 * * * *")
     public void evictAllBooksCaches() {
-        LOGGER.info("[:] Clean all books cache!");
+        try {
+            LOGGER.info("[:] Clean all books cache!");
+        } catch (Exception e) {
+            LOGGER.error("ERROR: {}", e.getMessage());
+        }
     }
 
     @CacheEvict(value = "publishers", allEntries = true)
     @Scheduled(cron = "0 0 * * * *")
     public void evictAllPublishersCaches() {
-        LOGGER.info("[:] Clean all publishers cache!");
+        try {
+            LOGGER.info("[:] Clean all publishers cache!");
+        } catch (Exception e) {
+            LOGGER.error("ERROR: {}", e.getMessage());
+        }
     }
 
     @CacheEvict(value = "authors", allEntries = true)
     @Scheduled(cron = "0 0 * * * *")
     public void evictAllAuthorsCaches() {
-        LOGGER.info("[:] Clean all authors cache!");
+        try {
+            LOGGER.info("[:] Clean all authors cache!");
+        } catch (Exception e) {
+            LOGGER.error("ERROR: {}", e.getMessage());
+        }
     }
 }

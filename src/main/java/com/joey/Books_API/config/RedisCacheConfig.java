@@ -1,6 +1,5 @@
 package com.joey.Books_API.config;
 
-import com.joey.Books_API.schedule.CacheEvictScheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +37,19 @@ public class RedisCacheConfig implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         try {
             stringRedisTemplate.opsForValue().set("testKey", "testValue");
             String value = stringRedisTemplate.opsForValue().get("testKey");
             LOGGER.info("Redis connection test successful: {}", value);
         } catch (Exception e) {
-            LOGGER.error("ERROR: Redis connection test failed: {}", e.getMessage());
+            LOGGER.error("========================================================================");
+            LOGGER.error("ERROR: Redis connection test failed");
+            LOGGER.error("ERROR REDIS MSG: {}", e.getMessage());
+            LOGGER.error("ERROR REDIS CAUSE: " + e.getCause());
+            LOGGER.error("========================================================================");
+            LOGGER.error(e.toString());
+            LOGGER.error("========================================================================");
         }
     }
 }

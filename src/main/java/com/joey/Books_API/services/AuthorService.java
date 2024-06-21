@@ -72,7 +72,7 @@ public class AuthorService {
     @Cacheable(value = "authors", key = "'allAuthors'")
     public ServiceResponse<Iterable<AuthorModel>> getAllAuthors () {
         Iterable<AuthorModel> authors = this.authorRepository.findAll();
-        LOGGER.info("Found all Authors");
+        LOGGER.info("Finding all authors!");
         return new ServiceResponse<>(HttpStatus.OK, authors);
     }
 

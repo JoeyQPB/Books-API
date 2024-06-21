@@ -64,7 +64,7 @@ public class PublisherService {
     public ServiceResponse<Iterable<PublisherModel>> getAllPublishers () {
         Iterable<PublisherModel> publisher = this.publisherRepository.findAll();
 
-        LOGGER.info("Publisher found: {}", publisher);
+        LOGGER.info("Finding all publishers!");
         return new ServiceResponse<>(HttpStatus.OK, publisher);
     }
 

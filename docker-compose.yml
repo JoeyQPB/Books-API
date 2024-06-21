@@ -1,0 +1,45 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres-container-compose
+    environment:
+      POSTGRES_USER: postgre
+      POSTGRES_PASSWORD: postgre
+      POSTGRES_DB: book-store
+    ports:
+      - "5432:5432"
+    networks:
+      - bookstore-net
+
+#  redis:
+#    image: redis:latest
+#    container_name: redis-container-compose
+#    ports:
+#      - "6379:6379"
+#    networks:
+#      - bookstore-net
+
+  spring-boot-app:
+    image: book-store-api:latest
+    container_name: books-container-compose
+    depends_on:
+      - postgres
+#      - redis
+    ports:
+      - "8080:8080"
+    networks:
+      - bookstore-net
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-container-compose:5432/book-store
+      SPRING_DATASOURCE_USERNAME: postgre
+      SPRING_DATASOURCE_PASSWORD: postgre
+#      SPRING_REDIS_HOST: redis3docker-compose up --build
+#      SPRING_REDIS_PORT: 6379
+      SPRING_FLYWAY_URL: jdbc:postgresql://postgres-container-compose:5432/book-store
+      SPRING_FLYWAY_USER: postgre
+      SPRING_FLYWAY_PASSWORD: postgre
+
+networks:
+  bookstore-net:
+    driver: bridge

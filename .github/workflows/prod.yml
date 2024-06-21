@@ -40,4 +40,4 @@ jobs:
         run: sudo docker rm -f book-store-api-container
 
       - name: Run docker container
-        run: sudo docker run -d --name books-container-compose --network bookstore-net -p 8080:8080 -e SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-container:5432/book-store -e SPRING_DATASOURCE_USERNAME=postgre -e SPRING_DATASOURCE_PASSWORD=postgre -e SPRING_FLYWAY_URL=jdbc:postgresql://postgres-container:5432/book-store -e SPRING_FLYWAY_USER=postgre -e SPRING_FLYWAY_PASSWORD=postgre ${{secrets.DOCKER_USERNAME}}/book-store-api:latest
+        run: sudo docker run -d --name books-container --network bookstore-net -p 8080:8080 -e SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-container:5432/book-store -e SPRING_DATASOURCE_USERNAME=postgre -e SPRING_DATASOURCE_PASSWORD=postgre -e SPRING_FLYWAY_URL=jdbc:postgresql://postgres-container:5432/book-store -e SPRING_FLYWAY_USER=postgre -e SPRING_FLYWAY_PASSWORD=postgre ${{secrets.DOCKER_USERNAME}}/book-store-api:latest
